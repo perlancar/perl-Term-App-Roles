@@ -69,7 +69,11 @@ has use_color => (
     lazy    => 1,
     default => sub {
         my $self = shift;
-        if (defined $ENV{COLOR}) {
+        if (exists $ENV{NO_COLOR}) {
+            $self->{_term_attrs_debug_info}{use_color_from} =
+                'NO_COLOR env';
+            return 0;
+        } elsif (defined $ENV{COLOR}) {
             $self->{_term_attrs_debug_info}{use_color_from} =
                 'COLOR env';
             return $ENV{COLOR};
@@ -291,6 +295,12 @@ Can be used to set C<use_utf8>.
 =item * INTERACTIVE => BOOL
 
 Can be used to set C<interactive>.
+
+=item * NO_COLOR
+
+Can be used to disable color. Takes precedence over C<COLOR>.
+
+For more information, see L<https://no-color.org>.
 
 =item * COLOR => BOOL (or INT or STR)
 

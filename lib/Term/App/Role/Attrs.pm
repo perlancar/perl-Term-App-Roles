@@ -29,7 +29,7 @@ sub _term_size {
 
     ($termw_cache, $termh_cache) = (0, 0);
     if (eval { require Term::Size; 1 }) {
-        ($termw_cache, $termh_cache) = Term::Size::chars();
+        ($termw_cache, $termh_cache) = Term::Size::chars(*STDOUT{IO});
     }
     ($termw_cache, $termh_cache);
 }
